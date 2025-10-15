@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Analysis UTF-8 Test Python</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
+  <header class="bg-dark py-5 shadow-sm sticky-top mb-5">
+    <div class="container">
+      <h1 class="text-white text-center mb-0">Python Data Analysis Example - Excel</h1>
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="container mt-4">
+    {% for message in messages %}
+      <div class="alert text-center fs-6 alert-dismissible fade show
+                  {% if message.tags %}alert-{{ message.tags }}{% else %}alert-primary{% endif %}"
+           role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="container-fluid py-4">
+    {% if ne %}
+    <div class="container">
+      <div class="row g-3 align-items-stretch mb-4 p-4 bg-light rounded-3 shadow">
+        <div class="col-12">
+          <h2 class="h4 mb-3">Average:</h2>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-success text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-graph-up"></i> Points</h3>
+              <p class="card-text display-6 mb-0">{{ne.apoints}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-danger text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-cash-coin"></i> Salary</h3>
+              <p class="card-text display-6 mb-0">{{ne.asalary}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-warning text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-person-badge"></i> Age</h3>
+              <p class="card-text display-6 mb-0">{{ne.aage}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 align-items-stretch mb-4 p-4 bg-light rounded-3 shadow">
+        <div class="col-12">
+          <h2 class="h4 mb-3">Hightest:</h2>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-success text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-trophy"></i> Points</h3>
+              <p class="card-text display-6 mb-0">{{ne.hpoints}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-danger text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-trophy"></i> Salary</h3>
+              <p class="card-text display-6 mb-0">{{ne.hsalary}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="card bg-warning text-white border-0 shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h6 text-uppercase mb-2"><i class="bi bi-trophy"></i> Age</h3>
+              <p class="card-text display-6 mb-0">{{ne.hage}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center gap-3 py-4 px-3 bg-white rounded-3 shadow-sm">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalId">
+              <i class="bi bi-cloud-arrow-up"></i> Upload File
+            </button>
+
+            <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+                 role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitleId">Upload Excel File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <form action="{% url 'main:main_page' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label">
+                          Choose file <span class="text-danger">only excel file</span>
+                        </label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          name="file_uploaded"
+                          id=""
+                          placeholder=""
+                          aria-describedby="fileHelpId"
+                          accept=".xls,.xlsx"
+                          required
+                        />
+                        <div class="form-text" id="fileHelpId">
+                          Supported: .xls, .xlsx
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                      </button>
+                      <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-cloud-arrow-up"></i> Upload
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              const myModal = new bootstrap.Modal(
+                document.getElementById("modalId"),
+                options,
+              );
+            </script>
+
+            <a class="btn btn-danger btn-lg" href="#" role="button">
+              <i class="bi bi-arrow-clockwise"></i> Reset
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="row g-3">
+        {% for i in data %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xxl-2">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title h5 mb-3">
+                <i class="bi bi-person-circle"></i> Name: {{i.Name}}
+              </h3>
+              <p class="card-text fs-6 mb-2">
+                <i class="bi bi-graph-up-arrow"></i> Points: <strong>{{i.Points}}</strong>
+              </p>
+              <p class="card-text fs-6 mb-2">
+                <i class="bi bi-calendar2-week"></i> Age: <strong>{{i.Age}}</strong> Years Old
+              </p>
+              <p class="card-text fs-6 mb-0">
+                <i class="bi bi-cash"></i> Salary: <strong>{{i.Salary}}SR</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
